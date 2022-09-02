@@ -1,0 +1,16 @@
+image: 11notes/alpine:3.16
+manifests:
+  - image: 11notes/alpine:amd64-3.16
+    platform:
+      architecture: amd64
+      os: linux
+  - image: 11notes/alpine:arm32v7-3.16
+    platform:
+      architecture: arm
+      os: linux
+      variant: v7
+  - image: 11notes/alpine:arm64v8-3.16
+    platform:
+      architecture: arm64
+      os: linux
+      variant: v8
