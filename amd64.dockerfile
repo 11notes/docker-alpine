@@ -1,9 +1,12 @@
 # :: Header
-    FROM alpine:3.16
-
+  FROM alpine:3.17
+  
 # :: Run
-    USER root
+  USER root
 
-    # :: prepare
-        RUN apk --update --no-cache add \
-                shadow
+# :: prepare
+  RUN set -ex; \
+    apk --update --no-cache add \
+      curl \
+      tzdata \
+      shadow;
