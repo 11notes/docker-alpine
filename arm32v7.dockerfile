@@ -13,6 +13,5 @@
 # :: prepare
   RUN set -ex; \
     apk --update --no-cache add \
-      curl \
       tzdata \
       shadow;
