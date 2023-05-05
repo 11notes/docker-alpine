@@ -1,4 +1,4 @@
-image: 11notes/alpine:3.17
+image: 11notes/alpine:stable
 manifests:
   - image: 11notes/alpine:amd64-3.17
     platform:
