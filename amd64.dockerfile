@@ -8,4 +8,6 @@
   RUN set -ex; \
     apk --update --no-cache add \
       tzdata \
-      shadow;
+      shadow; \
+    apk update; \
+    apk upgrade;
