@@ -4,10 +4,10 @@
 # :: Run
   USER root
 
-# :: prepare
-  RUN set -ex; \
-    apk --update --no-cache add \
-      tzdata \
-      shadow; \
-    apk update; \
-    apk upgrade;
+  # :: update image
+    RUN set -ex; \
+      apk --update --no-cache add \
+        tzdata \
+        shadow; \
+      apk update; \
+      apk upgrade;
