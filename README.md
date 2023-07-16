@@ -1,6 +1,5 @@
 # Alpine
-
-Run Alpine Linux. Small, lightweight, secure and fast.
+Run Alpine Linux. Small, lightweight, secure and fast 🏔️
 
 ## Run
 ```shell
@@ -14,12 +13,13 @@ docker run --name alpine \
 | `user` | docker | user docker |
 | `uid` | 1000 | user id 1000 |
 | `gid` | 1000 | group id 1000 |
+| `home` | / | home directory of user docker |
 
 ## Parent
 * [alpine](https://hub.docker.com/_/alpine)
 
 ## Built with
-* [Alpine Linux](https://alpinelinux.org/)
+* [Alpine Linux](https://alpinelinux.org)
 
 ## Tips
 * Don't bind to ports < 1024 (requires root), use NAT/reverse proxy
