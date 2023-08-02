@@ -9,7 +9,8 @@
       apk --no-cache add \
         curl \
         tzdata \
-        shadow;
+        shadow; \
+      apk --no-cache upgrade;
 
   # :: create user
     RUN set -ex; \
