@@ -1,4 +1,6 @@
 # Alpine
+![size](https://img.shields.io/docker/image-size/11notes/alpine/3.18?color=0eb305) ![version](https://img.shields.io/docker/v/11notes/alpine?color=eb7a09) ![pulls](https://img.shields.io/docker/pulls/11notes/alpine?color=2b75d6) ![activity](https://img.shields.io/github/commit-activity/m/11notes/docker-alpine?color=c91cb8) ![commit-last](https://img.shields.io/github/last-commit/11notes/docker-alpine?color=c91cb8)
+
 Run Alpine Linux. Small, lightweight, secure and fast 🏔️
 
 ## Run
@@ -22,5 +24,5 @@ docker run --name alpine \
 * [Alpine Linux](https://alpinelinux.org)
 
 ## Tips
-* Don't bind to ports < 1024 (requires root), use NAT/reverse proxy
-* [Permanent Stroage](https://github.com/11notes/alpine-docker-netshare) - Module to store permanent container data via NFS/CIFS and more
+* Only use rootless container runtime (podman, rootless docker)
+* Don't bind to ports < 1024 (requires root), use NAT/reverse proxy (haproxy, traefik, nginx)

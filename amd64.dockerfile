@@ -1,5 +1,5 @@
 # :: Header
-  FROM alpine:3.18.2
+  FROM alpine:3.18.3
   
 # :: Run
   USER root
