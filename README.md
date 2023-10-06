@@ -20,7 +20,7 @@ docker run --name alpine \
 ## Parent
 * [alpine](https://hub.docker.com/_/alpine)
 
-## Built with
+## Built with and thanks to
 * [Alpine Linux](https://alpinelinux.org)
 
 ## Tips
