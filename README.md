@@ -13,11 +13,11 @@ docker run --name alpine \
 | Parameter | Value | Description |
 | --- | --- | --- |
 | `user` | docker | user docker |
-| `uid` | 1000 | user id 1000 |
-| `gid` | 1000 | group id 1000 |
+| `uid` | 1000 | user id |
+| `gid` | 1000 | group id |
 | `home` | / | home directory of user docker |
 
-## Parent
+## Parent image
 * [alpine](https://hub.docker.com/_/alpine)
 
 ## Built with and thanks to
