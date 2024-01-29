@@ -1,5 +1,5 @@
 # :: Header
-  FROM alpine:3.19.1
+  FROM arm64v8/alpine:3.19.1
   
 # :: Run
   USER root
