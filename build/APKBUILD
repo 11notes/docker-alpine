@@ -1,0 +1,38 @@
+# Maintainer: Éric BURGHARD <eric@itsufficient.me>
+pkgname=mimalloc
+pkgver=3.19.1
+pkgrel=0
+pkgdesc="mimalloc is a compact general purpose allocator with excellent performance."
+url="https://github.com/microsoft/mimalloc"
+arch="all"
+license="MIT"
+makedepends="cmake"
+options="!check" # No test suite
+subpackages="$pkgname-doc $pkgname-dev"
+source="$pkgname-$pkgver.tar.gz::https://github.com/microsoft/$pkgname/archive/v$pkgver.tar.gz"
+
+build() {
+	mkdir build && cd build
+	cmake -DMI_INSTALL_TOPLEVEL=ON -DCMAKE_INSTALL_PREFIX=/usr ..
+	make -j"$(nproc)"
+}
+
+package() {
+  (cd build && make DESTDIR="$pkgdir" install)
+
+  mv "$pkgdir"/usr/lib "$pkgdir"/lib
+
+	for file in $(ls | grep -i -e license -e copying -e copyring -e changelog -e contributing -e readme -e code_of_conduct); do
+		install -m644 -D -t "$pkgdir"/usr/share/doc/"$pkgname" "$file"
+	done
+}
+
+dev() {
+  default_dev
+  find "$pkgdir"/lib/cmake/mimalloc/ -name '*.cmake' -exec install -Dm644 {} -t "$subpkgdir"/usr/share/cmake/Modules/ \;
+  rm -rf "$pkgdir"/lib/cmake
+}
+
+sha512sums="
+927b046e67783b325a6e41e3a9a6d3d78306fa1c82255defd1f3a7a60a27fd809a601f65b1b27fa38f2064e124f29856d7c0e5ccc33c54c2e4b6ebb9816d74b1  mimalloc-2.1.2.tar.gz
+"
