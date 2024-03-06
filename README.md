@@ -9,7 +9,7 @@ What can I do with this? This image will give you a base Alpine image with some 
 # RUN
 ```shell
 docker run --name alpine \
-  -d 11notes/:[tag]
+  -d 11notes/alpine:[tag]
 ```
 
 # EXAMPLES
