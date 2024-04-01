@@ -1,6 +1,6 @@
 # :: Build
   FROM alpine:3.19.1 as build
-  ENV BUILD_VERSION=v3.19.1
+  ENV MIMALLOC_VERSION=v2.1.2
 
   RUN set -ex; \
     apk add --no-cache \
@@ -15,7 +15,7 @@
       git; \
     git clone https://github.com/microsoft/mimalloc.git; \
     cd /mimalloc; \
-    git checkout ${BUILD_VERSION}; \
+    git checkout ${MIMALLOC_VERSION}; \
     mkdir build; \
     cd build; \
     cmake ..; \
