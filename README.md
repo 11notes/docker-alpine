@@ -12,12 +12,6 @@ docker run --name alpine \
   -d 11notes/alpine:[tag]
 ```
 
-# EXAMPLES
-/usr/lib/libmimalloc.so.2
-```shell
-export LD_PRELOAD=/usr/lib/libmimalloc.so.2
-```
-
 # DEFAULT SETTINGS
 | Parameter | Value | Description |
 | --- | --- | --- |
@@ -31,6 +25,8 @@ export LD_PRELOAD=/usr/lib/libmimalloc.so.2
 | --- | --- | --- |
 | `TZ` | [Time Zone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) | |
 | `DEBUG` | Show debug information | |
+| `LD_PRELOAD` | Set mimalloc as default memalloc | /lib/libmimalloc.so |
+| `MIMALLOC_LARGE_OS_PAGES` | Large memory pages by default | 1 |
 
 # BUILT WITH
 * [mimalloc](https://github.com/microsoft/mimalloc)

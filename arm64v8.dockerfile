@@ -2,17 +2,36 @@
   FROM multiarch/qemu-user-static:x86_64-aarch64 as qemu
 
 # :: Build
-  FROM 11notes/apk-build:arm64v8-stable as build
+  FROM arm64v8/alpine:3.19.1 as build
   COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
-  ENV APK_NAME="mimalloc"
-  COPY ./build /src
+  ENV BUILD_VERSION=v3.19.1
+
   RUN set -ex; \
-    apk-build
+    apk add --no-cache \
+      curl \
+      wget \
+      unzip \
+      build-base \
+      linux-headers \
+      make \
+      cmake \
+      g++ \
+      git; \
+    git clone https://github.com/microsoft/mimalloc.git; \
+    cd /mimalloc; \
+    git checkout ${BUILD_VERSION}; \
+    mkdir build; \
+    cd build; \
+    cmake ..; \
+    make -j$(nproc); \
+    make install
 
 # :: Header
   FROM arm64v8/alpine:3.19.1
   COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
-  COPY --from=build /apk /apk/custom
+  COPY --from=build /mimalloc/build/*.so.* /lib/
+  ENV LD_PRELOAD=/lib/libmimalloc.so
+  ENV MIMALLOC_LARGE_OS_PAGES=1
   
 # :: Run
   USER root
@@ -23,9 +42,8 @@
         curl \
         tzdata \
         shadow; \
-      apk --no-cache --allow-untrusted --repository /apk/custom add \
-        mimalloc; \
-      apk --no-cache upgrade;
+      apk --no-cache upgrade; \
+      ln -s /lib/libmimalloc.so.* /lib/libmimalloc.so;
 
   # :: create user
     RUN set -ex; \
