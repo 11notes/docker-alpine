@@ -38,6 +38,8 @@
         tzdata \
         shadow; \
       apk --no-cache upgrade;
+      
+    RUN ln -s /lib/libmimalloc.so.* /lib/libmimalloc.so || echo "linked"
 
   # :: create user
     RUN set -ex; \
