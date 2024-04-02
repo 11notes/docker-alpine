@@ -42,8 +42,7 @@
         curl \
         tzdata \
         shadow; \
-      apk --no-cache upgrade; \
-      ln -s /lib/libmimalloc.so.* /lib/libmimalloc.so;
+      apk --no-cache upgrade;
 
   # :: create user
     RUN set -ex; \
