@@ -4,7 +4,7 @@
 # :: Build
   FROM arm64v8/alpine:3.19.1 as build
   COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
-  ENV MIMALLOC_VERSION=v2.1.2
+  ENV MIMALLOC_VERSION=v2.1.4
 
   RUN set -ex; \
     apk add --no-cache \
