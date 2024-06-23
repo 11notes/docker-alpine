@@ -2,9 +2,9 @@
   FROM multiarch/qemu-user-static:x86_64-aarch64 as qemu
 
 # :: Build
-  FROM arm64v8/alpine:3.19.1 as build
+  FROM arm64v8/alpine:3.20.1 as build
   COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
-  ENV MIMALLOC_VERSION=v2.1.4
+  ENV MIMALLOC_VERSION=v2.1.7
 
   RUN set -ex; \
     apk add --no-cache \
@@ -27,7 +27,7 @@
     make install
 
 # :: Header
-  FROM arm64v8/alpine:3.19.1
+  FROM arm64v8/alpine:3.20.1
   COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
   COPY --from=build /mimalloc/build/*.so.* /lib/
   ENV LD_PRELOAD=/lib/libmimalloc.so
