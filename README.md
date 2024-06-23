@@ -1,7 +1,7 @@
 ![Banner](https://github.com/11notes/defaults/blob/main/static/img/banner.png?raw=true)
 
 # 🏔️ Alpine Linux
-![size](https://img.shields.io/docker/image-size/11notes/alpine/3.19.1?color=0eb305) ![version](https://img.shields.io/docker/v/11notes/alpine/3.19.1?color=eb7a09) ![pulls](https://img.shields.io/docker/pulls/11notes/alpine?color=2b75d6) ![activity](https://img.shields.io/github/commit-activity/m/11notes/docker-alpine?color=c91cb8) ![commit-last](https://img.shields.io/github/last-commit/11notes/docker-alpine?color=c91cb8) ![stars](https://img.shields.io/docker/stars/11notes/alpine?color=e6a50e)
+![size](https://img.shields.io/docker/image-size/11notes/alpine/3.20.1?color=0eb305) ![version](https://img.shields.io/docker/v/11notes/alpine/3.20.1?color=eb7a09) ![pulls](https://img.shields.io/docker/pulls/11notes/alpine?color=2b75d6) ![activity](https://img.shields.io/github/commit-activity/m/11notes/docker-alpine?color=c91cb8) ![commit-last](https://img.shields.io/github/last-commit/11notes/docker-alpine?color=c91cb8) ![stars](https://img.shields.io/docker/stars/11notes/alpine?color=e6a50e)
 
 # SYNOPSIS
 What can I do with this? This image will give you a base Alpine image with some additional tweaks like some bin’s which are present by default and the mimalloc memory allocator which can be used for certain apps to deal with musl’s not so optimized malloc for multi threading. 
