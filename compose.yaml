@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  alpine:
+    container_name: "alpine"
+    environment:
+      TZ: Europe/Zurich
+    networks:
+      - alpine
+    restart: always
+networks:
+  alpine:
+    internal: true
