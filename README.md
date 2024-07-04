@@ -6,10 +6,20 @@
 # SYNOPSIS
 What can I do with this? This image will give you a base Alpine image with some additional tweaks like some bin’s which are present by default and the mimalloc memory allocator which can be used for certain apps to deal with musl’s not so optimized malloc for multi threading. 
 
-# RUN
-```shell
-docker run --name alpine \
-  -d 11notes/alpine:[tag]
+# COMPOSE
+```yaml
+version: "3.8"
+services:
+  alpine:
+    container_name: "alpine"
+    environment:
+      TZ: Europe/Zurich
+    networks:
+      - alpine
+    restart: always
+networks:
+  alpine:
+    internal: true
 ```
 
 # DEFAULT SETTINGS
