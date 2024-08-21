@@ -8,18 +8,12 @@ What can I do with this? This image will give you a base Alpine image with some 
 
 # COMPOSE
 ```yaml
-version: "3.8"
 services:
   alpine:
     container_name: "alpine"
     environment:
       TZ: Europe/Zurich
-    networks:
-      - alpine
     restart: always
-networks:
-  alpine:
-    internal: true
 ```
 
 # DEFAULT SETTINGS
@@ -43,7 +37,6 @@ networks:
 * [alpine](https://alpinelinux.org)
 
 # TIPS
-* Allow non-root ports < 1024 via `echo "net.ipv4.ip_unprivileged_port_start={n}" > /etc/sysctl.d/ports.conf`
 * Use a reverse proxy like Traefik, Nginx to terminate TLS with a valid certificate
 * Use Let’s Encrypt certificates to protect your SSL endpoints
 

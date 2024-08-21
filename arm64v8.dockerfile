@@ -2,7 +2,7 @@
   FROM multiarch/qemu-user-static:x86_64-aarch64 as qemu
 
 # :: Build
-  FROM arm64v8/alpine:3.20.1 as build
+  FROM --platform=linux/arm64 arm64v8/alpine:3.20.2 as build
   COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
   ENV MIMALLOC_VERSION=v2.1.7
 
@@ -27,7 +27,7 @@
     make install
 
 # :: Header
-  FROM arm64v8/alpine:3.20.1
+  FROM --platform=linux/arm64 arm64v8/alpine:3.20.2
   COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
   COPY --from=build /mimalloc/build/*.so.* /lib/
   ENV LD_PRELOAD=/lib/libmimalloc.so
@@ -38,13 +38,14 @@
 
   # :: update image
     RUN set -ex; \
-      apk --no-cache add \
+      apk --no-cache --update add \
         curl \
         tzdata \
         shadow; \
-      apk --no-cache upgrade;
+      apk --no-cache --update upgrade;
       
-    RUN ln -s /lib/libmimalloc.so.* /lib/libmimalloc.so || echo "linked"
+    RUN set -ex; \
+      ln -s /lib/libmimalloc.so.* /lib/libmimalloc.so || echo "libmimalloc.so linked"
 
   # :: create user
     RUN set -ex; \

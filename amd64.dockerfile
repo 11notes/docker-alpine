@@ -1,5 +1,5 @@
 # :: Build
-  FROM alpine:3.20.1 as build
+  FROM alpine:3.20.2 as build
   ENV MIMALLOC_VERSION=v2.1.7
 
   RUN set -ex; \
@@ -23,7 +23,7 @@
     make install
 
 # :: Header
-  FROM alpine:3.20.1
+  FROM alpine:3.20.2
   COPY --from=build /mimalloc/build/*.so.* /lib/
   ENV LD_PRELOAD=/lib/libmimalloc.so
   ENV MIMALLOC_LARGE_OS_PAGES=1
@@ -33,13 +33,14 @@
 
   # :: update image
     RUN set -ex; \
-      apk --no-cache add \
+      apk --no-cache --update add \
         curl \
         tzdata \
         shadow; \
-      apk --no-cache upgrade;
+      apk --no-cache --update upgrade;
       
-    RUN ln -s /lib/libmimalloc.so.* /lib/libmimalloc.so || echo "linked"
+    RUN set -ex; \
+      ln -s /lib/libmimalloc.so.* /lib/libmimalloc.so || echo "libmimalloc.so linked"
 
   # :: create user
     RUN set -ex; \
