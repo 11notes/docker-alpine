@@ -39,6 +39,7 @@
   # :: update image
     RUN set -ex; \
       apk --no-cache --update add \
+        tini \
         curl \
         tzdata \
         shadow; \
