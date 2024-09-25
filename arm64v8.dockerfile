@@ -2,7 +2,7 @@
   FROM multiarch/qemu-user-static:x86_64-aarch64 as qemu
 
 # :: Build
-  FROM --platform=linux/arm64 arm64v8/alpine:3.20.2 as build
+  FROM --platform=linux/arm64 alpine as build
   COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
   ENV MIMALLOC_VERSION=v2.1.7
 
@@ -27,7 +27,7 @@
     make install
 
 # :: Header
-  FROM --platform=linux/arm64 arm64v8/alpine:3.20.2
+  FROM --platform=linux/arm64 alpine:3.20.3
   COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
   COPY --from=build /mimalloc/build/*.so.* /lib/
   ENV LD_PRELOAD=/lib/libmimalloc.so
