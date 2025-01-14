@@ -1,2 +1,5 @@
 ### 🪄 Features
-* use description from .json and update github repository description
+* switch to new github workflow and build process
+
+### 🚀 Updates
+* bump Alpine to 3.21.2
