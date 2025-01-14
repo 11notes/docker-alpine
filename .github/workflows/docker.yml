@@ -24,13 +24,6 @@ jobs:
         with:
           filename: '.json'
 
-      - name: github container registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: docker hub
         uses: docker/login-action@v3
         with:
@@ -62,8 +55,6 @@ jobs:
           tags: |
             ${{ env.json_image }}:${{ env.json_version }}
             ${{ env.json_image }}:stable
-            ghcr.io/${{ env.json_image }}:${{ env.json_version }}
-            ghcr.io/${{ env.json_image }}:stable
 
       - name: create release notes
         env:
