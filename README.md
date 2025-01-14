@@ -23,7 +23,7 @@ services:
 # DEFAULT SETTINGS 🗃️
 | Parameter | Value | Description |
 | --- | --- | --- |
-| `user` | docker | user docker |
+| `user` | docker | user name |
 | `uid` | 1000 | [user identifier](https://en.wikipedia.org/wiki/User_identifier) |
 | `gid` | 1000 | [group identifier](https://en.wikipedia.org/wiki/Group_identifier) |
 | `home` | / | home directory of user docker |
@@ -47,8 +47,8 @@ services:
 * [alpine](https://alpinelinux.org)
 
 # TIPS 📌
-* Use a reverse proxy like Traefik, Nginx to terminate TLS with a valid certificate
+* Use a reverse proxy like Traefik, Nginx, HAproxy to terminate TLS with a valid certificate
 * Use Let’s Encrypt certificates to protect your SSL endpoints
 
 # ElevenNotes<sup>™️</sup>
-This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [RELEASE.md](https://github.com/11notes/docker-alpine/blob/3.21.2/RELEASE.md) for breaking changes. You can find all my repositories on [github](https://github.com/11notes).
+This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-alpine/releases) for breaking changes. You can find all my repositories on [github](https://github.com/11notes?tab=repositories).

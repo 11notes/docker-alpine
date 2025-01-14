@@ -76,7 +76,13 @@ jobs:
             --url https://api.github.com/repos/${{ github.repository }} \
             --header 'authorization: Bearer ${{ secrets.REPO_TOKEN }}' \
             --header 'content-type: application/json' \
-            --data '{"description": "${{ env.json_description }}"}' \
+            --data '{
+              "description":"${{ env.json_description }}",
+              "homepage":"",
+              "has_issues":true,
+              "has_projects":false,
+              "has_wiki":false
+            }' \
             --fail
 
       - name: push README.md to docker hub
