@@ -1,0 +1,8 @@
+{
+  "image":"11notes/alpine",
+  "description":"Alpine Linux with mimalloc for fastest multi-threaded memory allocation",
+  "name":"alpine",
+  "version":"3.21.2",
+  "parent":"scratch",
+  "root":"/"
+}
