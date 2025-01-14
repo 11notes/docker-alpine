@@ -1,7 +1,7 @@
 ![Banner](https://github.com/11notes/defaults/blob/main/static/img/banner.png?raw=true)
 
 # 🏔️ Alpine Linux
-[<img src="https://img.shields.io/badge/github-source-blue?logo=github">](https://github.com/11notes/docker-alpine/tree/3.21.2) ![size](https://img.shields.io/docker/image-size/11notes/alpine/3.21.2?color=0eb305) ![version](https://img.shields.io/docker/v/11notes/alpine/3.21.2?color=eb7a09) ![pulls](https://img.shields.io/docker/pulls/11notes/alpine?color=2b75d6)
+[<img src="https://img.shields.io/badge/github-source-blue?logo=github">](https://github.com/11notes/docker-alpine) ![size](https://img.shields.io/docker/image-size/11notes/alpine/3.21.2?color=0eb305) ![version](https://img.shields.io/docker/v/11notes/alpine/3.21.2?color=eb7a09) ![pulls](https://img.shields.io/docker/pulls/11notes/alpine?color=2b75d6)
 
 **Alpine Linux with mimalloc for fastest multi-threaded memory allocation**
 
@@ -13,6 +13,7 @@
 name: "alpine"
 services:
   alpine:
+    image: "11notes/alpine:3.21.2"
     container_name: "alpine"
     environment:
       TZ: "Europe/Zurich"
@@ -23,20 +24,23 @@ services:
 | Parameter | Value | Description |
 | --- | --- | --- |
 | `user` | docker | user docker |
-| `uid` | 1000 | user id 1000 |
-| `gid` | 1000 | group id 1000 |
-| `home` |  | home directory of user docker |
+| `uid` | 1000 | [user identifier](https://en.wikipedia.org/wiki/User_identifier) |
+| `gid` | 1000 | [group identifier](https://en.wikipedia.org/wiki/Group_identifier) |
+| `home` | / | home directory of user docker |
 
 # ENVIRONMENT 📝
 | Parameter | Value | Default |
 | --- | --- | --- |
 | `TZ` | [Time Zone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) | |
-| `DEBUG` | Show debug information | |
+| `DEBUG` | Show debug messages from image **not** app | |
 | `LD_PRELOAD` | Set mimalloc as default memalloc | /usr/lib/libmimalloc.so |
 | `MIMALLOC_LARGE_OS_PAGES` | Large memory pages by default | 1 |
 
 # SOURCE 💾
-* [11notes/alpine:3.21.2](https://github.com/11notes/docker-alpine/tree/3.21.2)
+* [11notes/alpine](https://github.com/11notes/docker-alpine)
+
+# PARENT IMAGE 👩🏼‍🍼
+* [scratch](https://hub.docker.com/_/scratch)
 
 # BUILT WITH 🧰
 * [mimalloc](https://github.com/microsoft/mimalloc)
