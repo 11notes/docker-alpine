@@ -1,2 +1,2 @@
 ### 🪄 Features
-* adding semver tags
+* adding grype
