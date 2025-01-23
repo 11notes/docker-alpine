@@ -51,6 +51,6 @@ services:
 # TIPS 📌
 * Use a reverse proxy like Traefik, Nginx, HAproxy to terminate TLS with a valid certificate
 * Use Let’s Encrypt certificates to protect your SSL endpoints
-
+  
 # ElevenNotes™️
 This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-alpine/releases) for breaking changes. If you have any problems with using this image simply raise an [issue](https://github.com/11notes/docker-alpine/issues), thanks . You can find all my repositories on [github](https://github.com/11notes?tab=repositories).

@@ -18,20 +18,33 @@ jobs:
       security-events: write
 
     steps:   
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: init / checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
-      - name: .json to env
+      - name: init / .json to env
         uses: rgarcia-phi/json-to-variables@9835d537368468c4e4de5254dc3efeadda183793
         with:
           filename: '.json'
 
-      - name: semver tags
+      - name: init / semver tags
+        id: tags
         env:
           APP_VERSION: ${{ env.json_version }}
+          STABLE: ${{ env.json_stable }}
         run: |
-          echo "SEMVER_MAJOR=$(awk -F. '{ print $1 }' <<< ${APP_VERSION})" >> $GITHUB_ENV
-          echo "SEMVER_MINOR=$(awk -F. '{ print $2 }' <<< ${APP_VERSION})" >> $GITHUB_ENV
-          echo "SEMVER_PATCH=$(awk -F. '{ print $3 }' <<< ${APP_VERSION})" >> $GITHUB_ENV
+          export SHA=$(git rev-parse --short HEAD)
+          export SEMVER_MAJOR=$(awk -F. '{ print $1 }' <<< ${APP_VERSION})
+          export SEMVER_MINOR=$(awk -F. '{ print $2 }' <<< ${APP_VERSION})
+          export SEMVER_PATCH=$(awk -F. '{ print $3 }' <<< ${APP_VERSION})
+          export TAGS="latest"
+
+          if[ ! -z ${SEMVER_MAJOR} ]; TAGS="${TAGS},${SEMVER_MAJOR}"; fi
+          if[ ! -z ${SEMVER_MINOR} ]; TAGS="${TAGS},${SEMVER_MAJOR}.${SEMVER_MINOR}"; fi
+          if[ ! -z ${SEMVER_PATCH} ]; TAGS="${TAGS},${SEMVER_MAJOR}.${SEMVER_MINOR}.${SEMVER_PATCH}"; fi
+          if echo "${TAGS}" | grep -q "${STABLE}"; TAGS="${TAGS},stable"; fi
+
+          TAGS="${TAGS},${SHA}"
+          echo "CV=${TAGS}" >> $GITHUB_OUTPUT
 
       - name: docker hub
         uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
@@ -102,11 +115,7 @@ jobs:
             APP_NAME=${{ env.json_name }}
             APP_VERSION=${{ env.json_version }}
             APP_ROOT=${{ env.json_root }}
-          tags: |
-            ${{ env.json_image }}:${{ env.SEMVER_MAJOR }}
-            ${{ env.json_image }}:${{ env.SEMVER_MAJOR }}.${{ env.SEMVER_MINOR }}
-            ${{ env.json_image }}:${{ env.SEMVER_MAJOR }}.${{ env.SEMVER_MINOR }}.${{ env.SEMVER_PATCH }}
-            ${{ env.json_image }}:stable
+          tags: ${{ steps.tags.outputs.CV }}
 
       - name: create release notes
         env:
