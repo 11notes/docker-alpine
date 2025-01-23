@@ -30,19 +30,20 @@ jobs:
         env:
           APP_VERSION: ${{ env.json_version }}
           STABLE: ${{ env.json_stable }}
+          APP_IMAGE: ${{ env.json_image }}
         run: |
           export SHA=$(git rev-parse --short HEAD)
           export SEMVER_MAJOR=$(awk -F. '{ print $1 }' <<< ${APP_VERSION})
           export SEMVER_MINOR=$(awk -F. '{ print $2 }' <<< ${APP_VERSION})
           export SEMVER_PATCH=$(awk -F. '{ print $3 }' <<< ${APP_VERSION})
-          export TAGS="latest"
+          export TAGS="${APP_IMAGE}:latest"
 
-          if [ ! -z ${SEMVER_MAJOR} ]; then TAGS="${TAGS},${SEMVER_MAJOR}"; fi
-          if [ ! -z ${SEMVER_MINOR} ]; then TAGS="${TAGS},${SEMVER_MAJOR}.${SEMVER_MINOR}"; fi
-          if [ ! -z ${SEMVER_PATCH} ]; then TAGS="${TAGS},${SEMVER_MAJOR}.${SEMVER_MINOR}.${SEMVER_PATCH}"; fi
-          if echo "${TAGS}" | grep -q "${STABLE}" ; then TAGS="${TAGS},stable"; fi
+          if [ ! -z ${SEMVER_MAJOR} ]; then TAGS="${TAGS},${APP_IMAGE}:${SEMVER_MAJOR}"; fi
+          if [ ! -z ${SEMVER_MINOR} ]; then TAGS="${TAGS},${APP_IMAGE}:${SEMVER_MAJOR}.${SEMVER_MINOR}"; fi
+          if [ ! -z ${SEMVER_PATCH} ]; then TAGS="${TAGS},${APP_IMAGE}:${SEMVER_MAJOR}.${SEMVER_MINOR}.${SEMVER_PATCH}"; fi
+          if echo "${TAGS}" | grep -q "${STABLE}" ; then TAGS="${TAGS},${APP_IMAGE}:stable"; fi
 
-          TAGS="${TAGS},${SHA}"
+          TAGS="${TAGS},${APP_IMAGE}:${SHA}"
           echo "${TAGS}"
           echo "IMAGE_TAGS=${TAGS}" >> $GITHUB_ENV
 
