@@ -44,7 +44,7 @@ jobs:
           if echo "${TAGS}" | grep -q "${STABLE}" ; then TAGS="${TAGS},stable"; fi
 
           TAGS="${TAGS},${SHA}"
-          echo "CV=${TAGS}" >> $GITHUB_OUTPUT
+          echo "IMAGE_TAGS=${TAGS}" >> $GITHUB_ENV
 
       - name: docker / login to hub
         uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
@@ -115,7 +115,7 @@ jobs:
             APP_NAME=${{ env.json_name }}
             APP_VERSION=${{ env.json_version }}
             APP_ROOT=${{ env.json_root }}
-          tags: ${{ steps.tags.outputs.CV }}
+          tags: ${{ env.IMAGE_TAGS }}
 
       - name: github / create release notes
         env:
