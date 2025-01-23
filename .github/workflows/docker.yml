@@ -38,10 +38,10 @@ jobs:
           export SEMVER_PATCH=$(awk -F. '{ print $3 }' <<< ${APP_VERSION})
           export TAGS="latest"
 
-          if[ ! -z ${SEMVER_MAJOR} ]; TAGS="${TAGS},${SEMVER_MAJOR}"; fi
-          if[ ! -z ${SEMVER_MINOR} ]; TAGS="${TAGS},${SEMVER_MAJOR}.${SEMVER_MINOR}"; fi
-          if[ ! -z ${SEMVER_PATCH} ]; TAGS="${TAGS},${SEMVER_MAJOR}.${SEMVER_MINOR}.${SEMVER_PATCH}"; fi
-          if echo "${TAGS}" | grep -q "${STABLE}"; TAGS="${TAGS},stable"; fi
+          if[ ! -z ${SEMVER_MAJOR} ]; then TAGS="${TAGS},${SEMVER_MAJOR}"; fi
+          if[ ! -z ${SEMVER_MINOR} ]; then TAGS="${TAGS},${SEMVER_MAJOR}.${SEMVER_MINOR}"; fi
+          if[ ! -z ${SEMVER_PATCH} ]; then TAGS="${TAGS},${SEMVER_MAJOR}.${SEMVER_MINOR}.${SEMVER_PATCH}"; fi
+          if echo "${TAGS}" | grep -q "${STABLE}"; then TAGS="${TAGS},stable"; fi
 
           TAGS="${TAGS},${SHA}"
           echo "CV=${TAGS}" >> $GITHUB_OUTPUT
