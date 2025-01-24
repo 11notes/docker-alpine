@@ -6,9 +6,6 @@ on:
     tags:
       - 'v*'
 
-env:
-  IMAGE_ARCH: "linux/amd64,linux/arm64"
-
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
@@ -26,33 +23,44 @@ jobs:
         with:
           filename: '.json'
 
-      - name: init / semver and other tags
-        env:
-          APP_VERSION: ${{ env.json_version }}
-          STABLE: ${{ env.json_stable }}
-          APP_IMAGE: ${{ env.json_image }}
-          SPECIAL_TAGS: ${{ env.json_tags }}
+      - name: init / setup environment
         run: |
-          export SHA=$(git rev-parse --short HEAD)
-          export SEMVER_MAJOR=$(awk -F. '{ print $1 }' <<< ${APP_VERSION})
-          export SEMVER_MINOR=$(awk -F. '{ print $2 }' <<< ${APP_VERSION})
-          export SEMVER_PATCH=$(awk -F. '{ print $3 }' <<< ${APP_VERSION})
-          export TAGS="${APP_IMAGE}:latest"
+          : # set default arch if not set
+          echo "IMAGE_ARCH=${json_arch:-linux/amd64,linux/arm64}" >> $GITHUB_ENV
 
-          if [ ! -z ${SEMVER_MAJOR} ]; then TAGS="${TAGS},${APP_IMAGE}:${SEMVER_MAJOR}"; fi
-          if [ ! -z ${SEMVER_MINOR} ]; then TAGS="${TAGS},${APP_IMAGE}:${SEMVER_MAJOR}.${SEMVER_MINOR}"; fi
-          if [ ! -z ${SEMVER_PATCH} ]; then TAGS="${TAGS},${APP_IMAGE}:${SEMVER_MAJOR}.${SEMVER_MINOR}.${SEMVER_PATCH}"; fi
-          if echo "${TAGS}" | grep -q "${STABLE}" ; then TAGS="${TAGS},${APP_IMAGE}:stable"; fi
-          if [ ! -z ${SPECIAL_TAGS} ]; then SPECIAL_TAGS=$(echo ${SPECIAL_TAGS} | sed 's/,/ /g'); for TAG in ${SPECIAL_TAGS}; do TAGS="${TAGS},${APP_IMAGE}:${TAG}"; done; fi
-          
-          TAGS="${TAGS},${APP_IMAGE}:${SHA}"
-          echo "${TAGS}"
-          echo "IMAGE_TAGS=${TAGS}" >> $GITHUB_ENV
+
+          : # create tags for semver, stable and other shenanigans
+          export LOCAL_SHA=$(git rev-parse --short HEAD)
+          export LOCAL_SEMVER_MAJOR=$(awk -F. '{ print $1 }' <<< ${json_version})
+          export LOCAL_SEMVER_MINOR=$(awk -F. '{ print $2 }' <<< ${json_version})
+          export LOCAL_SEMVER_PATCH=$(awk -F. '{ print $3 }' <<< ${json_versionN})
+          export LOCAL_TAGS="${json_name}:latest"
+          if [ ! -z ${LOCAL_SEMVER_MAJOR} ]; then LOCAL_TAGS="${LOCAL_TAGS},${json_name}:${LOCAL_SEMVER_MAJOR}"; fi
+          if [ ! -z ${LOCAL_SEMVER_MINOR} ]; then LOCAL_TAGS="${LOCAL_TAGS},${json_name}:${LOCAL_SEMVER_MAJOR}.${LOCAL_SEMVER_MINOR}"; fi
+          if [ ! -z ${LOCAL_SEMVER_PATCH} ]; then LOCAL_TAGS="${LOCAL_TAGS},${json_name}:${LOCAL_SEMVER_MAJOR}.${LOCAL_SEMVER_MINOR}.${LOCAL_SEMVER_PATCH}"; fi
+          if echo "${LOCAL_TAGS}" | grep -q "${json_stable}" ; then LOCAL_TAGS="${LOCAL_TAGS},${json_name}:stable"; fi
+          if [ ! -z ${SPECIAL_TAGS} ]; then SPECIAL_LOCAL_TAGS=$(echo ${SPECIAL_TAGS} | sed 's/,/ /g'); for LOCAL_TAG in ${SPECIAL_TAGS}; do LOCAL_TAGS="${LOCAL_TAGS},${json_name}:${LOCAL_TAG}"; done; fi
+          LOCAL_TAGS="${LOCAL_TAGS},${json_image}:${LOCAL_SHA}"
+          echo "IMAGE_TAGS=${LOCAL_TAGS}" >> $GITHUB_ENV
+
+          : # if for whatever reason UID/GID must be changed at build time
+          echo "IMAGE_UID=${json_uid:-1000}" >> $GITHUB_ENV
+          echo "IMAGE_GID=${json_gid:-1000}" >> $GITHUB_ENV
+
+          : # set default build arguments
+          LOCAL_ARGUMENTS=$(echo "APP_IMAGE=${json_image}
+            APP_NAME=${json_name}
+            APP_VERSION=${json_version}
+            APP_ROOT=${json_root}
+            APP_UID=${json_uid:-1000}
+            APP_GID=${json_gid:-1000}
+          ")
+          echo "IMAGE_ARGUMENTS=${LOCAL_ARGUMENTS}" | sed 's/ //g' >> $GITHUB_ENV
 
       - name: docker / login to hub
         uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ env.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: docker / setup qemu
@@ -71,10 +79,7 @@ jobs:
           cache-from: type=registry,ref=${{ env.json_image }}:buildcache
           cache-to: type=registry,ref=${{ env.json_image }}:buildcache,mode=max,compression=zstd,force-compression=true
           build-args: |
-            APP_IMAGE=${{ env.json_image }}
-            APP_NAME=${{ env.json_name }}
-            APP_VERSION=${{ env.json_version }}
-            APP_ROOT=${{ env.json_root }}
+            ${{ env.IMAGE_ARGUMENTS }}
           tags: |
             ${{ env.json_image }}:grype
 
@@ -114,10 +119,7 @@ jobs:
           cache-from: type=registry,ref=${{ env.json_image }}:buildcache
           cache-to: type=registry,ref=${{ env.json_image }}:buildcache,mode=max,compression=zstd,force-compression=true
           build-args: |
-            APP_IMAGE=${{ env.json_image }}
-            APP_NAME=${{ env.json_name }}
-            APP_VERSION=${{ env.json_version }}
-            APP_ROOT=${{ env.json_root }}
+            ${{ env.IMAGE_ARGUMENTS }}
           tags: |
             ${{ env.IMAGE_TAGS }}
 
@@ -145,7 +147,7 @@ jobs:
       - name: docker / push README.md to docker hub
         uses: christian-korneck/update-container-description-action@d36005551adeaba9698d8d67a296bd16fa91f8e8
         env:
-          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_USER: ${{ env.DOCKER_USERNAME }}
           DOCKER_PASS: ${{ secrets.DOCKER_TOKEN }}
         with:
           destination_container_repo: ${{ env.json_image }}
