@@ -1,2 +1,2 @@
 ### 🪄 Features
-* add new tag logic do be 100% dynamic
+* add new workflow which is 100% modular and based on .json
