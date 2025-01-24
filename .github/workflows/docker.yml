@@ -31,7 +31,6 @@ jobs:
           : # set default arch if not set
           echo "IMAGE_ARCH=${json_arch:-linux/amd64,linux/arm64}" >> $GITHUB_ENV
 
-
           : # create tags for semver, stable and other shenanigans
           export LOCAL_SHA=$(git rev-parse --short HEAD)
           export LOCAL_SEMVER_MAJOR=$(awk -F. '{ print $1 }' <<< ${json_version})
