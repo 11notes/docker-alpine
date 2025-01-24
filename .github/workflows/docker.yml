@@ -35,13 +35,13 @@ jobs:
           export LOCAL_SHA=$(git rev-parse --short HEAD)
           export LOCAL_SEMVER_MAJOR=$(awk -F. '{ print $1 }' <<< ${json_version})
           export LOCAL_SEMVER_MINOR=$(awk -F. '{ print $2 }' <<< ${json_version})
-          export LOCAL_SEMVER_PATCH=$(awk -F. '{ print $3 }' <<< ${json_versionN})
-          export LOCAL_TAGS="${json_name}:latest"
-          if [ ! -z ${LOCAL_SEMVER_MAJOR} ]; then LOCAL_TAGS="${LOCAL_TAGS},${json_name}:${LOCAL_SEMVER_MAJOR}"; fi
-          if [ ! -z ${LOCAL_SEMVER_MINOR} ]; then LOCAL_TAGS="${LOCAL_TAGS},${json_name}:${LOCAL_SEMVER_MAJOR}.${LOCAL_SEMVER_MINOR}"; fi
-          if [ ! -z ${LOCAL_SEMVER_PATCH} ]; then LOCAL_TAGS="${LOCAL_TAGS},${json_name}:${LOCAL_SEMVER_MAJOR}.${LOCAL_SEMVER_MINOR}.${LOCAL_SEMVER_PATCH}"; fi
-          if echo "${LOCAL_TAGS}" | grep -q "${json_stable}" ; then LOCAL_TAGS="${LOCAL_TAGS},${json_name}:stable"; fi
-          if [ ! -z ${SPECIAL_TAGS} ]; then SPECIAL_LOCAL_TAGS=$(echo ${SPECIAL_TAGS} | sed 's/,/ /g'); for LOCAL_TAG in ${SPECIAL_TAGS}; do LOCAL_TAGS="${LOCAL_TAGS},${json_name}:${LOCAL_TAG}"; done; fi
+          export LOCAL_SEMVER_PATCH=$(awk -F. '{ print $3 }' <<< ${json_version})
+          export LOCAL_TAGS="${json_image}:latest"
+          if [ ! -z ${LOCAL_SEMVER_MAJOR} ]; then LOCAL_TAGS="${LOCAL_TAGS},${json_image}:${LOCAL_SEMVER_MAJOR}"; fi
+          if [ ! -z ${LOCAL_SEMVER_MINOR} ]; then LOCAL_TAGS="${LOCAL_TAGS},${json_image}:${LOCAL_SEMVER_MAJOR}.${LOCAL_SEMVER_MINOR}"; fi
+          if [ ! -z ${LOCAL_SEMVER_PATCH} ]; then LOCAL_TAGS="${LOCAL_TAGS},${json_image}:${LOCAL_SEMVER_MAJOR}.${LOCAL_SEMVER_MINOR}.${LOCAL_SEMVER_PATCH}"; fi
+          if echo "${LOCAL_TAGS}" | grep -q "${json_stable}" ; then LOCAL_TAGS="${LOCAL_TAGS},${json_image}:stable"; fi
+          if [ ! -z ${SPECIAL_TAGS} ]; then SPECIAL_LOCAL_TAGS=$(echo ${SPECIAL_TAGS} | sed 's/,/ /g'); for LOCAL_TAG in ${SPECIAL_TAGS}; do LOCAL_TAGS="${LOCAL_TAGS},${json_image}:${LOCAL_TAG}"; done; fi
           LOCAL_TAGS="${LOCAL_TAGS},${json_image}:${LOCAL_SHA}"
           echo "IMAGE_TAGS=${LOCAL_TAGS}" >> $GITHUB_ENV
 
