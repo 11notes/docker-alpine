@@ -49,16 +49,6 @@ jobs:
           echo "IMAGE_UID=${json_uid:-1000}" >> $GITHUB_ENV
           echo "IMAGE_GID=${json_gid:-1000}" >> $GITHUB_ENV
 
-          : # set default build arguments
-          LOCAL_ARGUMENTS=$(echo "APP_IMAGE=${json_image}
-            APP_NAME=${json_name}
-            APP_VERSION=${json_version}
-            APP_ROOT=${json_root}
-            APP_UID=${json_uid:-1000}
-            APP_GID=${json_gid:-1000}
-          ")
-          echo "IMAGE_ARGUMENTS=${LOCAL_ARGUMENTS}" | sed 's/ //g'| tr -d '\r'  >> $GITHUB_ENV
-
       - name: docker / login to hub
         uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
         with:
@@ -81,7 +71,12 @@ jobs:
           cache-from: type=registry,ref=${{ env.json_image }}:buildcache
           cache-to: type=registry,ref=${{ env.json_image }}:buildcache,mode=max,compression=zstd,force-compression=true
           build-args: |
-            ${{ env.IMAGE_ARGUMENTS }}
+            APP_IMAGE=${{ env.json_image }}
+            APP_NAME=${{ env.json_name }}
+            APP_VERSION=${{ env.json_version }}
+            APP_ROOT=${{ env.json_root }}
+            APP_UID=${{ env.IMAGE_UID }}
+            APP_GID=${{ env.IMAGE_GID }}
           tags: |
             ${{ env.json_image }}:grype
 
@@ -121,7 +116,12 @@ jobs:
           cache-from: type=registry,ref=${{ env.json_image }}:buildcache
           cache-to: type=registry,ref=${{ env.json_image }}:buildcache,mode=max,compression=zstd,force-compression=true
           build-args: |
-            ${{ env.IMAGE_ARGUMENTS }}
+            APP_IMAGE=${{ env.json_image }}
+            APP_NAME=${{ env.json_name }}
+            APP_VERSION=${{ env.json_version }}
+            APP_ROOT=${{ env.json_root }}
+            APP_UID=${{ env.IMAGE_UID }}
+            APP_GID=${{ env.IMAGE_GID }}
           tags: |
             ${{ env.IMAGE_TAGS }}
 
