@@ -57,7 +57,7 @@ jobs:
             APP_UID=${json_uid:-1000}
             APP_GID=${json_gid:-1000}
           ")
-          echo "IMAGE_ARGUMENTS=${LOCAL_ARGUMENTS}" | sed 's/ //g' >> $GITHUB_ENV
+          echo "IMAGE_ARGUMENTS=${LOCAL_ARGUMENTS}" | sed 's/ //g'| tr '\n' ' '  >> $GITHUB_ENV
 
       - name: docker / login to hub
         uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567

@@ -47,9 +47,6 @@
     ENV LD_PRELOAD=/usr/lib/libmimalloc.so
     ENV MIMALLOC_LARGE_OS_PAGES=1
 
-    RUN set -ex; \
-      env;
-
   # :: multi-stage
     ADD alpine-minirootfs-${APP_VERSION}-${TARGETARCH}.tar.gz /
     COPY --from=util /docker-util/src /usr/local/bin
@@ -57,6 +54,9 @@
 
 # :: Run
   USER root
+
+    RUN set -ex; \
+        env;
 
   # :: update image
     RUN set -ex; \
