@@ -26,11 +26,12 @@ jobs:
         with:
           filename: '.json'
 
-      - name: init / semver tags
+      - name: init / semver and other tags
         env:
           APP_VERSION: ${{ env.json_version }}
           STABLE: ${{ env.json_stable }}
           APP_IMAGE: ${{ env.json_image }}
+          SPECIAL_TAGS: ${{ env.json_tags }}
         run: |
           export SHA=$(git rev-parse --short HEAD)
           export SEMVER_MAJOR=$(awk -F. '{ print $1 }' <<< ${APP_VERSION})
@@ -42,7 +43,8 @@ jobs:
           if [ ! -z ${SEMVER_MINOR} ]; then TAGS="${TAGS},${APP_IMAGE}:${SEMVER_MAJOR}.${SEMVER_MINOR}"; fi
           if [ ! -z ${SEMVER_PATCH} ]; then TAGS="${TAGS},${APP_IMAGE}:${SEMVER_MAJOR}.${SEMVER_MINOR}.${SEMVER_PATCH}"; fi
           if echo "${TAGS}" | grep -q "${STABLE}" ; then TAGS="${TAGS},${APP_IMAGE}:stable"; fi
-
+          if [ ! -z ${SPECIAL_TAGS} ]; then SPECIAL_TAGS=$(echo ${SPECIAL_TAGS} | sed 's/,/ /g'); for TAG in ${SPECIAL_TAGS}; do TAGS="${TAGS},${APP_IMAGE}:${TAG}"; done; fi
+          
           TAGS="${TAGS},${APP_IMAGE}:${SHA}"
           echo "${TAGS}"
           echo "IMAGE_TAGS=${TAGS}" >> $GITHUB_ENV
