@@ -2,12 +2,12 @@
   FROM alpine AS util
 
   RUN set -ex; \
-    apk add --no-cache \
+    apk --no-cache --update add \
       git; \
-    git clone -b stable https://github.com/11notes/docker-util.git;
+    git clone https://github.com/11notes/docker-util.git;
 
 # :: Build / mimalloc
-  FROM alpine AS mimalloc
+  FROM alpine AS build
   ARG VERSION=v2.1.7
 
   RUN set -ex; \
@@ -49,14 +49,11 @@
 
   # :: multi-stage
     ADD alpine-minirootfs-${APP_VERSION}-${TARGETARCH}.tar.gz /
-    COPY --from=util /docker-util/src /usr/local/bin
-    COPY --from=mimalloc /mimalloc/build/libmimalloc.so /usr/lib/
+    COPY --from=util /docker-util/src/ /usr/local/bin
+    COPY --from=build /mimalloc/build/libmimalloc.so /usr/lib/
 
 # :: Run
   USER root
-
-    RUN set -ex; \
-        env;
 
   # :: update image
     RUN set -ex; \

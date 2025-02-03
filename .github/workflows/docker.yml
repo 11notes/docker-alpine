@@ -41,7 +41,7 @@ jobs:
           if [ ! -z ${LOCAL_SEMVER_MINOR} ]; then LOCAL_TAGS="${LOCAL_TAGS},${json_image}:${LOCAL_SEMVER_MAJOR}.${LOCAL_SEMVER_MINOR}"; fi
           if [ ! -z ${LOCAL_SEMVER_PATCH} ]; then LOCAL_TAGS="${LOCAL_TAGS},${json_image}:${LOCAL_SEMVER_MAJOR}.${LOCAL_SEMVER_MINOR}.${LOCAL_SEMVER_PATCH}"; fi
           if echo "${LOCAL_TAGS}" | grep -q "${json_stable}" ; then LOCAL_TAGS="${LOCAL_TAGS},${json_image}:stable"; fi
-          if [ ! -z ${SPECIAL_TAGS} ]; then SPECIAL_LOCAL_TAGS=$(echo ${SPECIAL_TAGS} | sed 's/,/ /g'); for LOCAL_TAG in ${SPECIAL_TAGS}; do LOCAL_TAGS="${LOCAL_TAGS},${json_image}:${LOCAL_TAG}"; done; fi
+          if [ ! -z ${json_tags} ]; then SPECIAL_LOCAL_TAGS=$(echo ${json_tags} | sed 's/,/ /g'); for LOCAL_TAG in ${json_tags}; do LOCAL_TAGS="${LOCAL_TAGS},${json_image}:${LOCAL_TAG}"; done; fi
           LOCAL_TAGS="${LOCAL_TAGS},${json_image}:${LOCAL_SHA}"
           echo "IMAGE_TAGS=${LOCAL_TAGS}" >> $GITHUB_ENV
 
@@ -70,14 +70,13 @@ jobs:
           platforms: ${{ env.IMAGE_ARCH }}
           cache-from: type=registry,ref=${{ env.json_image }}:buildcache
           cache-to: type=registry,ref=${{ env.json_image }}:buildcache,mode=max,compression=zstd,force-compression=true
-          <<: &ref-build
-              build-args: |
-                APP_IMAGE=${{ env.json_image }}
-                APP_NAME=${{ env.json_name }}
-                APP_VERSION=${{ env.json_version }}
-                APP_ROOT=${{ env.json_root }}
-                APP_UID=${{ env.IMAGE_UID }}
-                APP_GID=${{ env.IMAGE_GID }}
+          build-args: |
+            APP_IMAGE=${{ env.json_image }}
+            APP_NAME=${{ env.json_name }}
+            APP_VERSION=${{ env.json_version }}
+            APP_ROOT=${{ env.json_root }}
+            APP_UID=${{ env.IMAGE_UID }}
+            APP_GID=${{ env.IMAGE_GID }}
           tags: |
             ${{ env.json_image }}:grype
 
@@ -116,7 +115,13 @@ jobs:
           platforms: ${{ env.IMAGE_ARCH }}
           cache-from: type=registry,ref=${{ env.json_image }}:buildcache
           cache-to: type=registry,ref=${{ env.json_image }}:buildcache,mode=max,compression=zstd,force-compression=true
-          <<: *ref-build
+          build-args: |
+            APP_IMAGE=${{ env.json_image }}
+            APP_NAME=${{ env.json_name }}
+            APP_VERSION=${{ env.json_version }}
+            APP_ROOT=${{ env.json_root }}
+            APP_UID=${{ env.IMAGE_UID }}
+            APP_GID=${{ env.IMAGE_GID }}
           tags: |
             ${{ env.IMAGE_TAGS }}
 
