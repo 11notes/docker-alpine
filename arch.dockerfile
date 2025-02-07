@@ -1,6 +1,8 @@
 # :: Util
   FROM alpine AS util
 
+  ARG NO_CACHE
+
   RUN set -ex; \
     apk --no-cache --update add \
       git; \
@@ -37,6 +39,7 @@
     ARG APP_NAME
     ARG APP_VERSION
     ARG APP_ROOT
+    ARG NO_CACHE
 
   # :: environment
     ENV APP_IMAGE=${APP_IMAGE}
