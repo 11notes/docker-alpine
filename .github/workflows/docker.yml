@@ -56,8 +56,11 @@ jobs:
           echo "IMAGE_UID=${json_uid:-1000}" >> $GITHUB_ENV
           echo "IMAGE_GID=${json_gid:-1000}" >> $GITHUB_ENV
 
+          : # echo inputs
+          echo "${{ toJSON(github.event.inputs) }}"
+
       - name: github / set release
-        if: ${{ inputs.release == 'false' }}
+        if: ${{ inputs.release == false }}
         run: |
           echo "RELEASE=false" >> $GITHUB_ENV
 
