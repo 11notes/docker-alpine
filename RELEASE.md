@@ -1,2 +1,2 @@
 ### 🪄 Features
-* adding dispatch workflow and release management
+* add cron for auto updates and build of image

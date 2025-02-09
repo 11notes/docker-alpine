@@ -2,13 +2,13 @@ name: cron
 
 on:
   schedule:
-    - cron: "15 */1 * * *"
+    - cron: "0 3 * * *"
 
 jobs:
   cron:
     runs-on: ubuntu-latest
     steps:   
-      - name: auto build image
+      - name: auto build and update image
         uses: benc-uk/workflow-dispatch@e2e5e9a103e331dad343f381a29e654aea3cf8fc
         with:
           workflow: docker.yml
