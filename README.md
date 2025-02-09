@@ -34,7 +34,7 @@ services:
 | Parameter | Value | Default |
 | --- | --- | --- |
 | `TZ` | [Time Zone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) | |
-| `DEBUG` | Show debug messages from image **not** app | |
+| `DEBUG` | Will activate debug option for container image and app (if available) | |
 | `LD_PRELOAD` | Set mimalloc as default memalloc | /usr/lib/libmimalloc.so |
 | `MIMALLOC_LARGE_OS_PAGES` | Large memory pages by default | 1 |
 
@@ -48,9 +48,9 @@ services:
 * [mimalloc](https://github.com/microsoft/mimalloc)
 * [alpine](https://alpinelinux.org)
 
-# TIPS 📌
-* Use a reverse proxy like Traefik, Nginx, HAproxy to terminate TLS with a valid certificate
-* Use Let’s Encrypt certificates to protect your SSL endpoints
+# GENERAL TIPS 📌
+* Use a reverse proxy like Traefik, Nginx, HAproxy to terminate TLS and to protect your endpoints
+* Use Let’s Encrypt DNS-01 challenge to obtain valid SSL certificates for your services
   
 # ElevenNotes™️
-This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-alpine/releases) for breaking changes. If you have any problems with using this image simply raise an [issue](https://github.com/11notes/docker-alpine/issues), thanks . You can find all my repositories on [github](https://github.com/11notes?tab=repositories).
+This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-alpine/releases) for breaking changes. If you have any problems with using this image simply raise an [issue](https://github.com/11notes/docker-alpine/issues), thanks. You can find all my repositories on [github](https://github.com/11notes?tab=repositories).

@@ -1,2 +1,2 @@
 ### 🪄 Features
-* adding no-cache option
+* adding dispatch workflow and release management
