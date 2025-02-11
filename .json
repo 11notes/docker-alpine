@@ -1,12 +1,18 @@
 {
   "image":"11notes/alpine",
-  "description":"Alpine Linux with mimalloc for fastest multi-threaded memory allocation",
   "name":"alpine",
-  "version":"3.21.2",
   "root":"/",
   
-  "stable":"3.21.2",
-  "latest":"3.21.2",
-  "parent":"scratch",
-  "parent_url":"https://hub.docker.com/_/scratch"
+  "semver":{
+    "version":"3.21.2",
+    "stable":"3.21.2",
+    "latest":"3.21.2"
+  },
+
+  "readme":{
+    "description":"Alpine Linux with mimalloc for fastest multi-threaded memory allocation",
+    "parent":{
+      "image":"scratch"
+    }
+  }
 }

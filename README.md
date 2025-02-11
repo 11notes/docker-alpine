@@ -10,16 +10,18 @@
 
 If used as a base image for your own image simply leave out your own **ENTRYPOINT** to use the default one and provide your own ```/usr/local/bin/entrypoint.sh```.
 
-# COMPOSE ✂️
-```yaml
-name: "alpine"
-services:
-  alpine:
-    image: "11notes/alpine:3.21.2"
-    container_name: "alpine"
-    environment:
-      TZ: "Europe/Zurich"
-    restart: "always"
+# BUILD 🚧
+```dockerfile
+FROM 11notes/alpine:stable
+# switch to root during setup
+USER root
+# setup your app
+RUN set -ex; \
+  setup your app
+# add custom entrypoint to image
+COPY --chown=1000:1000 ./entrypoint.sh /usr/local/bin
+# start image as 1000:1000
+USER docker
 ```
 
 # DEFAULT SETTINGS 🗃️
@@ -28,7 +30,7 @@ services:
 | `user` | docker | user name |
 | `uid` | 1000 | [user identifier](https://en.wikipedia.org/wiki/User_identifier) |
 | `gid` | 1000 | [group identifier](https://en.wikipedia.org/wiki/Group_identifier) |
-| `home` | / | home directory of user docker |
+| `home` |  | home directory of user docker |
 
 # ENVIRONMENT 📝
 | Parameter | Value | Default |

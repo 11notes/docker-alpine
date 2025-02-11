@@ -1,12 +1,9 @@
 # :: Util
-  FROM alpine/git AS util
-  ARG NO_CACHE
-  RUN set -ex; \
-    git clone https://github.com/11notes/docker-util.git;
+  FROM 11notes/util AS util
 
 # :: Build / mimalloc
   FROM alpine AS build
-  ARG VERSION=v2.1.7
+  ARG VERSION=v2.1.9
 
   RUN set -ex; \
     apk add --no-cache \
@@ -24,7 +21,7 @@
     mkdir build; \
     cd build; \
     cmake ..; \
-    make -j$(nproc);
+    make -j $(nproc);
 
 # :: Header
   FROM scratch
@@ -35,7 +32,6 @@
     ARG APP_NAME
     ARG APP_VERSION
     ARG APP_ROOT
-    ARG NO_CACHE
 
   # :: environment
     ENV APP_IMAGE=${APP_IMAGE}
@@ -48,7 +44,7 @@
 
   # :: multi-stage
     ADD alpine-minirootfs-${APP_VERSION}-${TARGETARCH}.tar.gz /
-    COPY --from=util /git/docker-util/src/ /usr/local/bin
+    COPY --from=util /usr/local/bin/ /usr/local/bin
     COPY --from=build /mimalloc/build/libmimalloc.so /usr/lib/
 
 # :: Run
@@ -70,11 +66,9 @@
       adduser --uid 1000 -D -S -h ${APP_ROOT} -s /sbin/nologin -G docker docker;
 
   # :: copy filesystem changes and set correct permissions
-    COPY ./rootfs /
+    COPY --chown=1000:1000 ./rootfs /
     RUN set -ex; \
-      chmod +x -R /usr/local/bin; \
-      chown -R 1000:1000 \
-        /usr/local/bin;
+      chmod +x -R /usr/local/bin;
 
 # :: Start
   USER docker
