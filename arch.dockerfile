@@ -55,7 +55,7 @@
       apk --no-cache --update --repository https://dl-cdn.alpinelinux.org/alpine/edge/main add \
         ca-certificates \
         curl \
-        tzdata \; \
+        tzdata; \
       apk --no-cache --update --repository https://dl-cdn.alpinelinux.org/alpine/edge/community add \
         shadow \
         tini; \
