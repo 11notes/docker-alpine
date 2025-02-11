@@ -133,6 +133,12 @@ jobs:
         if: success() || failure()
         run: cat ${{ steps.scan.outputs.sarif }}
 
+      - name: grype / report / annotation
+        if: success() || failure()
+        uses: Miragon/sarif-report-parse@f8bcc5ece9c2b9a786ff4e7392cca2bb72ae8b4b
+        with:
+          sarif-file: ${{ steps.scan.outputs.sarif }}
+
       - name: grype / delete tag
         if: success() || failure()
         run: |
