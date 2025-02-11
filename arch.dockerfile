@@ -52,12 +52,13 @@
 
   # :: update image
     RUN set -ex; \
-      apk --no-cache --update add \
+      apk --no-cache --update --repository https://dl-cdn.alpinelinux.org/alpine/edge/main add \
         ca-certificates \
-        tini \
         curl \
-        tzdata \
-        shadow; \
+        tzdata \; \
+      apk --no-cache --update --repository https://dl-cdn.alpinelinux.org/alpine/edge/community add \
+        shadow \
+        tini; \
       apk --no-cache --update upgrade;
 
   # :: create user
