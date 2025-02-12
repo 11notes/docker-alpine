@@ -5,6 +5,13 @@
 
 **Alpine Linux with mimalloc for fastest multi-threaded memory allocation**
 
+# MAIN TAGS 🏷️
+These are the main tags for the image. There is also a tag for each commit and its shorthand sha256 value.
+
+* [3.21.2](https://hub.docker.com/r/11notes/alpine/tags?name=3.21.2)
+* [stable](https://hub.docker.com/r/11notes/alpine/tags?name=stable)
+* [latest](https://hub.docker.com/r/11notes/alpine/tags?name=latest)
+
 # SYNOPSIS 📖
 **What can I do with this?** This image will give you a base Alpine image with some additional tweaks like some bin’s (curl, tini, shadow, tzdata) which are present by default and the mimalloc memory allocator which can be used for certain apps to deal with musl’s not so optimized malloc for multi-threading. It will also execute the script ```/usr/local/bin/entrypoint.sh``` via [tini](https://github.com/krallin/tini).
 
