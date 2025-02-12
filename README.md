@@ -30,7 +30,7 @@ USER docker
 | `user` | docker | user name |
 | `uid` | 1000 | [user identifier](https://en.wikipedia.org/wiki/User_identifier) |
 | `gid` | 1000 | [group identifier](https://en.wikipedia.org/wiki/Group_identifier) |
-| `home` |  | home directory of user docker |
+| `home` | / | home directory of user docker |
 
 # ENVIRONMENT 📝
 | Parameter | Value | Default |
@@ -55,4 +55,4 @@ USER docker
 * Use Let’s Encrypt DNS-01 challenge to obtain valid SSL certificates for your services
   
 # ElevenNotes™️
-This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-alpine/releases) for breaking changes. If you have any problems with using this image simply raise an [issue](https://github.com/11notes/docker-alpine/issues), thanks. You can find all my repositories on [github](https://github.com/11notes?tab=repositories).
+This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-alpine/releases) for breaking changes. If you have any problems with using this image simply raise an [issue](https://github.com/11notes/docker-alpine/issues), thanks. If you have a question or inputs please create a new [discussion](https://github.com/11notes/docker-alpine/discussions) instead of an issue. You can find all my other repositories on [github](https://github.com/11notes?tab=repositories).

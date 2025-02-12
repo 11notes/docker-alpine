@@ -1,9 +1,8 @@
-name: cron
-
+name: tags
 on:
-  schedule:
-    - cron: "0 3 * * *"
-
+  push:
+    tags:
+      - 'v*'
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -13,3 +12,4 @@ jobs:
         with:
           workflow: docker.yml
           token: "${{ secrets.REPOSITORY_TOKEN }}"
+          inputs: '{ "release":"true" }'
