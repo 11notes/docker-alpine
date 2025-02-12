@@ -67,7 +67,7 @@
       adduser --uid 1000 -D -S -h ${APP_ROOT} -s /sbin/nologin -G docker docker;
 
   # :: copy filesystem changes and set correct permissions
-    COPY --chown=1000:1000 ./rootfs /
+    COPY ./rootfs /
     RUN set -ex; \
       chmod +x -R /usr/local/bin;
 
