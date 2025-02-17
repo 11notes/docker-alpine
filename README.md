@@ -1,14 +1,14 @@
 ![Banner](https://github.com/11notes/defaults/blob/main/static/img/banner.png?raw=true)
 
 # 🏔️ Alpine Linux
-[<img src="https://img.shields.io/badge/github-source-blue?logo=github&color=040308">](https://github.com/11notes/docker-alpine)![size](https://img.shields.io/docker/image-size/11notes/alpine/3.21.2?color=0eb305)![version](https://img.shields.io/docker/v/11notes/alpine/3.21.2?color=eb7a09)![pulls](https://img.shields.io/docker/pulls/11notes/alpine?color=2b75d6)[<img src="https://img.shields.io/github/issues/11notes/docker-alpine?color=7842f5">](https://github.com/11notes/docker-alpine/issues)
+[<img src="https://img.shields.io/badge/github-source-blue?logo=github&color=040308">](https://github.com/11notes/docker-alpine)![size](https://img.shields.io/docker/image-size/11notes/alpine/3.21.3?color=0eb305)![version](https://img.shields.io/docker/v/11notes/alpine/3.21.3?color=eb7a09)![pulls](https://img.shields.io/docker/pulls/11notes/alpine?color=2b75d6)[<img src="https://img.shields.io/github/issues/11notes/docker-alpine?color=7842f5">](https://github.com/11notes/docker-alpine/issues)
 
 **Alpine Linux with mimalloc for fastest multi-threaded memory allocation**
 
 # MAIN TAGS 🏷️
 These are the main tags for the image. There is also a tag for each commit and its shorthand sha256 value.
 
-* [3.21.2](https://hub.docker.com/r/11notes/alpine/tags?name=3.21.2)
+* [3.21.3](https://hub.docker.com/r/11notes/alpine/tags?name=3.21.3)
 * [stable](https://hub.docker.com/r/11notes/alpine/tags?name=stable)
 * [latest](https://hub.docker.com/r/11notes/alpine/tags?name=latest)
 
