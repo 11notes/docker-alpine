@@ -1,2 +1,2 @@
-### 💊 Fix
-* fix CVE-2025-26519
+### 🪄 Features
+* try enable ACS via workflow
