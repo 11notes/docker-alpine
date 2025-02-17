@@ -1,27 +1,8 @@
 # :: Util
   FROM 11notes/util AS util
 
-# :: Build / mimalloc
-  FROM alpine AS build
-  ARG VERSION=v2.1.9
-
-  RUN set -ex; \
-    apk add --no-cache \
-      curl \
-      wget \
-      unzip \
-      build-base \
-      linux-headers \
-      make \
-      cmake \
-      g++ \
-      git; \
-    git clone https://github.com/microsoft/mimalloc.git -b ${VERSION}; \
-    cd /mimalloc; \
-    mkdir build; \
-    cd build; \
-    cmake ..; \
-    make -j $(nproc);
+# :: Mimalloc
+  FROM 11notes/mimalloc:2.1.9 AS mimalloc
 
 # :: Header
   FROM scratch
@@ -45,7 +26,7 @@
   # :: multi-stage
     ADD alpine-minirootfs-${APP_VERSION}-${TARGETARCH}.tar.gz /
     COPY --from=util /usr/local/bin/ /usr/local/bin
-    COPY --from=build /mimalloc/build/libmimalloc.so /usr/lib/
+    COPY --from=mimalloc /usr/lib/libmimalloc.so /usr/lib/
 
 # :: Run
   USER root

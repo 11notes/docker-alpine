@@ -208,8 +208,7 @@ jobs:
               "has_issues":true,
               "has_discussions":true,
               "has_projects":false,
-              "has_wiki":false,
-              "security_and_analysis":{"advanced_security":{"status":"enabled"}}
+              "has_wiki":false
             }' \
             --fail
 

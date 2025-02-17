@@ -1,2 +1,2 @@
 ### 🪄 Features
-* try enable ACS via workflow
+* use new mimalloc base image
