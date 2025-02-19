@@ -1,2 +1,2 @@
-🚀 Updates
-* update Alpine to 3.21.3
+### 🪄 Features
+* new README.md workflow
