@@ -2,7 +2,7 @@
   FROM 11notes/util AS util
 
 # :: Mimalloc
-  FROM 11notes/mimalloc:2.2.3 AS mimalloc
+  FROM 11notes/mimalloc:2.2.2 AS mimalloc
 
 # :: Header
   FROM scratch
