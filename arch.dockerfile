@@ -2,29 +2,30 @@
   FROM 11notes/util AS util
 
 # :: Mimalloc
-  FROM 11notes/mimalloc:2.1.9 AS mimalloc
+  FROM 11notes/mimalloc:2.2.3 AS mimalloc
 
 # :: Header
   FROM scratch
 
   # :: arguments
-    ARG TARGETARCH
-    ARG APP_IMAGE
-    ARG APP_NAME
-    ARG APP_VERSION
-    ARG APP_ROOT
+    ARG TARGETARCH \
+        TARGETVARIANT \
+        APP_IMAGE \
+        APP_NAME \
+        APP_VERSION \
+        APP_ROOT
 
   # :: environment
-    ENV APP_IMAGE=${APP_IMAGE}
-    ENV APP_NAME=${APP_NAME}
-    ENV APP_VERSION=${APP_VERSION}
-    ENV APP_ROOT=${APP_ROOT}
+    ENV APP_IMAGE=${APP_IMAGE} \
+        APP_NAME=${APP_NAME} \
+        APP_VERSION=${APP_VERSION} \
+        APP_ROOT=${APP_ROOT}
 
-    ENV LD_PRELOAD=/usr/lib/libmimalloc.so
-    ENV MIMALLOC_LARGE_OS_PAGES=1
+    ENV LD_PRELOAD=/usr/lib/libmimalloc.so \
+        MIMALLOC_LARGE_OS_PAGES=1
 
   # :: multi-stage
-    ADD alpine-minirootfs-${APP_VERSION}-${TARGETARCH}.tar.gz /
+    ADD alpine-minirootfs-${APP_VERSION}-${TARGETARCH}${TARGETVARIANT}.tar.gz /
     COPY --from=util /usr/local/bin/ /usr/local/bin
     COPY --from=mimalloc /usr/lib/libmimalloc.so /usr/lib/
 
