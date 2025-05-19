@@ -5,20 +5,6 @@
 
 Alpine Linux with mimalloc for fastest multi-threaded memory allocation
 
-# MAIN TAGS 🏷️
-These are the main tags for the image. There is also a tag for each commit and its shorthand sha256 value.
-
-* [3.21.3](https://hub.docker.com/r/11notes/alpine/tags?name=3.21.3)
-* [stable](https://hub.docker.com/r/11notes/alpine/tags?name=stable)
-* [latest](https://hub.docker.com/r/11notes/alpine/tags?name=latest)
-
-# REPOSITORIES ☁️
-```
-docker pull 11notes/alpine:3.21.3
-docker pull ghcr.io/11notes/alpine:3.21.3
-docker pull quay.io/11notes/alpine:3.21.3
-```
-
 # SYNOPSIS 📖
 **What can I do with this?** This image will give you a base Alpine image with some additional tweaks like some bin’s (curl, tini, shadow, tzdata) which are present by default and the mimalloc memory allocator which can be used for certain apps to deal with musl’s not so optimized malloc for multi-threading. It will also execute the script ```/usr/local/bin/entrypoint.sh``` via [tini](https://github.com/krallin/tini).
 
@@ -64,6 +50,20 @@ USER docker
 | `TZ` | [Time Zone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) | |
 | `DEBUG` | Will activate debug option for container image and app (if available) | |
 
+# MAIN TAGS 🏷️
+These are the main tags for the image. There is also a tag for each commit and its shorthand sha256 value.
+
+* [3.21.3](https://hub.docker.com/r/11notes/alpine/tags?name=3.21.3)
+* [stable](https://hub.docker.com/r/11notes/alpine/tags?name=stable)
+* [latest](https://hub.docker.com/r/11notes/alpine/tags?name=latest)
+
+# REGISTRIES ☁️
+```
+docker pull 11notes/alpine:3.21.3
+docker pull ghcr.io/11notes/alpine:3.21.3
+docker pull quay.io/11notes/alpine:3.21.3
+```
+
 # SOURCE 💾
 * [11notes/alpine](https://github.com/11notes/docker-ALPINE)
 
@@ -83,4 +83,4 @@ USER docker
 # ElevenNotes™️
 This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-alpine/releases) for breaking changes. If you have any problems with using this image simply raise an [issue](https://github.com/11notes/docker-alpine/issues), thanks. If you have a question or inputs please create a new [discussion](https://github.com/11notes/docker-alpine/discussions) instead of an issue. You can find all my other repositories on [github](https://github.com/11notes?tab=repositories).
 
-*created 01.04.2025, 12:07:23 (CET)*
+*created 19.05.2025, 13:58:45 (CET)*
