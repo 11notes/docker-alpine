@@ -37,31 +37,22 @@
   # :: multi-stage
     ADD alpine-minirootfs-${APP_VERSION}-${TARGETARCH}${TARGETVARIANT}.tar.gz /
     COPY --from=util / /
+    COPY ./rootfs /
 
 # :: RUN
   USER root
-
-  # :: update image
-    ARG APP_NO_CACHE
-    RUN set -ex; \
-      apk --no-cache --update --repository https://dl-cdn.alpinelinux.org/alpine/edge/main add \
-        ca-certificates \
-        curl \
-        tzdata; \
-      apk --no-cache --update --repository https://dl-cdn.alpinelinux.org/alpine/edge/community add \
-        shadow \
-        tini; \
-      apk --no-cache --update upgrade;
-
-  # :: create user
-    RUN set -ex; \
-      addgroup --gid ${APP_GID} -S docker; \
-      adduser --uid ${APP_UID} -D -S -h ${APP_ROOT} -s /sbin/nologin -G docker docker;
-
-  # :: copy filesystem changes and set correct permissions
-    COPY ./rootfs /
-    RUN set -ex; \
-      chmod +x -R /usr/local/bin;
+  RUN set -ex; \
+    apk --no-cache --update --repository https://dl-cdn.alpinelinux.org/alpine/edge/main add \
+      ca-certificates \
+      curl \
+      tzdata; \
+    apk --no-cache --update --repository https://dl-cdn.alpinelinux.org/alpine/edge/community add \
+      shadow \
+      tini; \
+    apk --no-cache --update upgrade; \
+    addgroup --gid ${APP_GID} -S docker; \
+    adduser --uid ${APP_UID} -D -S -h ${APP_ROOT} -s /sbin/nologin -G docker docker; \
+    chmod +x -R /usr/local/bin;
 
 # :: EXECUTE
   USER ${APP_UID}:${APP_GID}
