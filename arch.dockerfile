@@ -1,35 +1,44 @@
-# :: Util
+# ╔═════════════════════════════════════════════════════╗
+# ║                       SETUP                         ║
+# ╚═════════════════════════════════════════════════════╝
+  # GLOBAL
+  ARG APP_UID=1000 \
+      APP_GID=1000
+
+  # :: FOREIGN IMAGES
   FROM 11notes/util AS util
 
-# :: Mimalloc
-  FROM 11notes/mimalloc:2.2.2 AS mimalloc
 
-# :: Header
+# ╔═════════════════════════════════════════════════════╗
+# ║                       IMAGE                         ║
+# ╚═════════════════════════════════════════════════════╝
+  # :: HEADER
   FROM scratch
 
-  # :: arguments
-    ARG TARGETARCH \
+  # :: default arguments
+    ARG TARGETPLATFORM \
+        TARGETOS \
+        TARGETARCH \
         TARGETVARIANT \
         APP_IMAGE \
         APP_NAME \
         APP_VERSION \
-        APP_ROOT
+        APP_ROOT \
+        APP_UID \
+        APP_GID \
+        APP_NO_CACHE
 
-  # :: environment
+  # :: default environment
     ENV APP_IMAGE=${APP_IMAGE} \
         APP_NAME=${APP_NAME} \
         APP_VERSION=${APP_VERSION} \
         APP_ROOT=${APP_ROOT}
 
-    ENV LD_PRELOAD=/usr/lib/libmimalloc.so \
-        MIMALLOC_LARGE_OS_PAGES=1
-
   # :: multi-stage
     ADD alpine-minirootfs-${APP_VERSION}-${TARGETARCH}${TARGETVARIANT}.tar.gz /
-    COPY --from=util /usr/local/bin/ /usr/local/bin
-    COPY --from=mimalloc /usr/lib/libmimalloc.so /usr/lib/
+    COPY --from=util / /
 
-# :: Run
+# :: RUN
   USER root
 
   # :: update image
@@ -46,14 +55,14 @@
 
   # :: create user
     RUN set -ex; \
-      addgroup --gid 1000 -S docker; \
-      adduser --uid 1000 -D -S -h ${APP_ROOT} -s /sbin/nologin -G docker docker;
+      addgroup --gid ${APP_GID} -S docker; \
+      adduser --uid ${APP_UID} -D -S -h ${APP_ROOT} -s /sbin/nologin -G docker docker;
 
   # :: copy filesystem changes and set correct permissions
     COPY ./rootfs /
     RUN set -ex; \
       chmod +x -R /usr/local/bin;
 
-# :: Start
-  USER docker
+# :: EXECUTE
+  USER ${APP_UID}:${APP_GID}
   ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]

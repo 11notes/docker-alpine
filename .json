@@ -5,8 +5,8 @@
   "arch":"linux/amd64,linux/arm64,linux/arm/v7",
   
   "semver":{
-    "version":"3.22.0",
-    "stable":"3.22.0"
+    "version":"3.22.1",
+    "stable":"3.22.1"
   },
 
   "readme":{
@@ -15,7 +15,6 @@
       "image":"scratch"
     },
     "built":{
-      "mimalloc":"https://github.com/11notes/docker-mimalloc",
       "alpine":"https://alpinelinux.org"
     }
   }
