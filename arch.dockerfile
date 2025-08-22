@@ -1,18 +1,21 @@
 # ╔═════════════════════════════════════════════════════╗
 # ║                       SETUP                         ║
 # ╚═════════════════════════════════════════════════════╝
-  # GLOBAL
+# GLOBAL
   ARG APP_UID=1000 \
       APP_GID=1000
 
-  # :: FOREIGN IMAGES
+# :: FOREIGN IMAGES
   FROM 11notes/util AS util
+  FROM 11notes/distroless AS distroless
+  FROM 11notes/distroless:curl AS distroless-curl
+  FROM 11notes/distroless:tini AS distroless-tini
 
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       BUILD                         ║
 # ╚═════════════════════════════════════════════════════╝
-  # :: FILE-SYSTEM
+# :: FILE-SYSTEM
   FROM scratch AS build
   ARG TARGETPLATFORM \
       TARGETOS \
@@ -28,21 +31,10 @@
 
   ADD alpine-minirootfs-${APP_VERSION}-${TARGETARCH}${TARGETVARIANT}.tar.gz /
   COPY --from=util / /
+  COPY --from=distroless / /
+  COPY --from=distroless-curl / /
+  COPY --from=distroless-tini / /
   COPY ./rootfs /
-
-  USER root
-  RUN set -ex; \
-    apk --no-cache --update --repository https://dl-cdn.alpinelinux.org/alpine/edge/main add \
-      ca-certificates \
-      curl \
-      tzdata; \
-    apk --no-cache --update --repository https://dl-cdn.alpinelinux.org/alpine/edge/community add \
-      shadow \
-      tini; \
-    apk --no-cache --update upgrade; \
-    addgroup --gid ${APP_GID} -S docker; \
-    adduser --uid ${APP_UID} -D -S -h ${APP_ROOT} -s /sbin/nologin -G docker docker; \
-    chmod +x -R /usr/local/bin;
 
     
 # ╔═════════════════════════════════════════════════════╗
@@ -75,4 +67,4 @@
 
 # :: EXECUTE
   USER ${APP_UID}:${APP_GID}
-  ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/entrypoint.sh"]
+  ENTRYPOINT ["/usr/local/bin/tini", "--", "/usr/local/bin/entrypoint.sh"]
