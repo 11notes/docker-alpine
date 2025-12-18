@@ -1,7 +1,7 @@
 name: "alpine"
 services:
   alpine:
-    image: "11notes/alpine:3.23.1"
+    image: "11notes/alpine:3.23.2"
     container_name: "alpine"
     environment:
       TZ: "Europe/Zurich"
