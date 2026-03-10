@@ -85,4 +85,4 @@ docker pull quay.io/11notes/alpine:3.23.3
 # ElevenNotes™️
 This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-alpine/releases) for breaking changes. If you have any problems with using this image simply raise an [issue](https://github.com/11notes/docker-alpine/issues), thanks. If you have a question or inputs please create a new [discussion](https://github.com/11notes/docker-alpine/discussions) instead of an issue. You can find all my other repositories on [github](https://github.com/11notes?tab=repositories).
 
-*created 29.01.2026, 06:45:13 (CET)*
+*created 03.02.2026, 08:57:02 (CET)*
