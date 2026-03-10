@@ -60,6 +60,9 @@
   RUN set -ex; \
     chmod +x -R /usr/local/bin;
 
+  RUN set -ex; \
+    apk --update --no-cache upgrade;
+
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       IMAGE                         ║
