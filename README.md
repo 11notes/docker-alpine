@@ -3,7 +3,7 @@
 # ALPINE
 ![size](https://img.shields.io/badge/image_size-9MB-green?color=%2338ad2d)![5px](https://raw.githubusercontent.com/11notes/static/refs/heads/master/img/markdown/transparent5x2px.png)![pulls](https://img.shields.io/docker/pulls/11notes/alpine?color=2b75d6)![5px](https://raw.githubusercontent.com/11notes/static/refs/heads/master/img/markdown/transparent5x2px.png)[<img src="https://img.shields.io/github/issues/11notes/docker-alpine?color=7842f5">](https://github.com/11notes/docker-alpine/issues)![5px](https://raw.githubusercontent.com/11notes/static/refs/heads/master/img/markdown/transparent5x2px.png)![swiss_made](https://img.shields.io/badge/Swiss_Made-FFFFFF?labelColor=FF0000&logo=data:image/svg%2bxml;base64,PHN2ZyB2ZXJzaW9uPSIxIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDMyIDMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxyZWN0IHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0idHJhbnNwYXJlbnQiLz4KICA8cGF0aCBkPSJtMTMgNmg2djdoN3Y2aC03djdoLTZ2LTdoLTd2LTZoN3oiIGZpbGw9IiNmZmYiLz4KPC9zdmc+)
 
-Alpine Linux with mimalloc for fastest multi-threaded memory allocation
+Alpine Linux from source
 
 # SYNOPSIS 📖
 **What can I do with this?** This image will give you a base Alpine image with static tools and defaults. It will also execute the script ```/usr/local/bin/entrypoint.sh``` via [tini](https://github.com/krallin/tini).
@@ -13,7 +13,7 @@ Alpine Linux with mimalloc for fastest multi-threaded memory allocation
 name: "alpine"
 services:
   alpine:
-    image: "11notes/alpine:3.23.4"
+    image: "11notes/alpine:3.24.0"
     container_name: "alpine"
     environment:
       TZ: "Europe/Zurich"
@@ -52,19 +52,19 @@ USER docker
 # MAIN TAGS 🏷️
 These are the main tags for the image. There is also a tag for each commit and its shorthand sha256 value.
 
-* [3.23.4](https://hub.docker.com/r/11notes/alpine/tags?name=3.23.4)
+* [3.24.0](https://hub.docker.com/r/11notes/alpine/tags?name=3.24.0)
 * [stable](https://hub.docker.com/r/11notes/alpine/tags?name=stable)
 
 ### There is no latest tag, what am I supposed to do about updates?
-It is my opinion that the ```:latest``` tag is a bad habbit and should not be used at all. Many developers introduce **breaking changes** in new releases. This would messed up everything for people who use ```:latest```. If you don’t want to change the tag to the latest [semver](https://semver.org/), simply use the short versions of [semver](https://semver.org/). Instead of using ```:3.23.4``` you can use ```:3``` or ```:3.23```. Since on each new version these tags are updated to the latest version of the software, using them is identical to using ```:latest``` but at least fixed to a major or minor version. Which in theory should not introduce breaking changes.
+It is my opinion that the ```:latest``` tag is a bad habbit and should not be used at all. Many developers introduce **breaking changes** in new releases. This would messed up everything for people who use ```:latest```. If you don’t want to change the tag to the latest [semver](https://semver.org/), simply use the short versions of [semver](https://semver.org/). Instead of using ```:3.24.0``` you can use ```:3``` or ```:3.24```. Since on each new version these tags are updated to the latest version of the software, using them is identical to using ```:latest``` but at least fixed to a major or minor version. Which in theory should not introduce breaking changes.
 
 If you still insist on having the bleeding edge release of this app, simply use the ```:rolling``` tag, but be warned! You will get the latest version of the app instantly, regardless of breaking changes or security issues or what so ever. You do this at your own risk!
 
 # REGISTRIES ☁️
 ```
-docker pull 11notes/alpine:3.23.4
-docker pull ghcr.io/11notes/alpine:3.23.4
-docker pull quay.io/11notes/alpine:3.23.4
+docker pull 11notes/alpine:3.24.0
+docker pull ghcr.io/11notes/alpine:3.24.0
+docker pull quay.io/11notes/alpine:3.24.0
 ```
 
 # SOURCE 💾
@@ -85,4 +85,4 @@ docker pull quay.io/11notes/alpine:3.23.4
 # ElevenNotes™️
 This image is provided to you at your own risk. Always make backups before updating an image to a different version. Check the [releases](https://github.com/11notes/docker-alpine/releases) for breaking changes. If you have any problems with using this image simply raise an [issue](https://github.com/11notes/docker-alpine/issues), thanks. If you have a question or inputs please create a new [discussion](https://github.com/11notes/docker-alpine/discussions) instead of an issue. You can find all my other repositories on [github](https://github.com/11notes?tab=repositories).
 
-*created 16.04.2026, 08:59:08 (CET)*
+*created 11.06.2026, 08:45:25 (CET)*
