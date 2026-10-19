@@ -5,11 +5,7 @@
   "arch": "linux/amd64,linux/arm64,linux/arm/v7",
   "semver": {
     "version": "3.24.2",
-<<<<<<< HEAD
     "stable": "3.24.2"
-=======
-    "stable": "3.24.0"
->>>>>>> 3c6a35348a6f4cf0dded1e847b94790821b9112a
   },
   "readme": {
     "description": "Alpine Linux from source",
