@@ -3,7 +3,7 @@
   "name": "alpine",
   "root": "/",
   "semver": {
-    "version": "3.24.3",
+    "version": "3.24.4",
     "stable": "3.24.2"
   },
   "readme": {
