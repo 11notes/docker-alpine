@@ -4,7 +4,7 @@
   "root": "/",
   "semver": {
     "version": "3.24.2",
-    "stable": "3.24.2"
+    "stable": "3.24"
   },
   "readme": {
     "description": "Alpine Linux from source",
